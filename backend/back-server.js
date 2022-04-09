@@ -10,7 +10,13 @@ const port = 3003;
 const app = express();
 
 //CORS parameters
-app.use(cors());
+const corsConfig = {
+    origin: ['http://192.168.0.100:3000']
+}
+
+app.use(cors(corsConfig));
+
+app.use(express.json());
 
 // main routes
 app.use('/session', sessionControl)
