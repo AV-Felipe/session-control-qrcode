@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 
 // endpoints for routes
 const sessionControl = require('./routes/sessionControl.js');
@@ -11,10 +12,13 @@ const app = express();
 
 //CORS parameters
 const corsConfig = {
-    origin: ['http://192.168.0.100:3000']
+    origin: ['http://192.168.0.100:3000'],
+    credentials: true,
 }
 
 app.use(cors(corsConfig));
+
+app.use(cookieParser());
 
 app.use(express.json());
 

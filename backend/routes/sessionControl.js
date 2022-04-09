@@ -12,6 +12,7 @@ router.post('/login', async (req, res)=>{
     console.log(req.body);
 
     res.status(200);
+    res.cookie('token name', 'token value');
     res.type('application/json');
     res.send('{"aqui": "foi"}');
 })

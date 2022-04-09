@@ -14,9 +14,10 @@ async function loginToServer(event){
 
     fetch('http://192.168.0.100:3003/session/login',{
         method: 'POST',
-        credentials:'same-origin',
+        credentials:'include',
         headers:{
             'Content-Type': 'application/json',
+            'Access-Control-Allow-Credentials': true,
         },
         body: JSON.stringify(bodyContent),
     })
