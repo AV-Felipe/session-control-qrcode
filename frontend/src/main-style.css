@@ -30,3 +30,7 @@ header {
     border-radius: 8px;
     padding: 5px;
 }
+
+#error-display {
+    color: rgb(229, 143, 128);
+}

@@ -20,8 +20,23 @@ async function loginToServer(event){
         },
         body: JSON.stringify(bodyContent),
     })
-    .then(response => response.json())
+    .then(response => {
+        if(!response.ok){
+            throw Error(response.status);
+        }else{
+            return response.json();
+        }
+        
+    })
     .then(data => {
         console.log(data);
+        //call screen change with cookie and data
     })
+    .catch(err => {
+        //console.log(err);
+        document.getElementById('error-display').innerHTML = `${err}`;
+        setTimeout(()=>{document.getElementById('error-display').innerHTML = ``;},2000)
+        return
+    })
+    
 }

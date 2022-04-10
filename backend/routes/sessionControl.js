@@ -36,7 +36,7 @@ router.post('/login', async (req, res)=>{
                 res.status(200);
                 res.cookie('access_token', newToken);
                 res.type('application/json');
-                res.send(`{"data": "${data.full_name}"}`);
+                res.send(`{"user_type": "${data.user_type}"}`);
                 return;
             }else{
                 res.status(401);
@@ -48,7 +48,7 @@ router.post('/login', async (req, res)=>{
             console.log(e)
             res.status(400);
             res.type('application/json');
-            res.send(`${e}`);
+            res.send(`{"error": "usuário ou senha inválidos"}`);
             return;
         }
 
