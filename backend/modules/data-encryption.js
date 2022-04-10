@@ -16,5 +16,24 @@ module.exports = {
                 }
             });
         });
+    },
+
+    async generatePassword(plainTextPassword){
+
+
+        const newPassword = plainTextPassword
+      
+        const hashedPassword = await new Promise((resolve, reject) => {
+            bcrypt.hash(newPassword, saltRounds, function(err, hash) {
+                if (err){
+                    reject(err);
+                }else{
+                    resolve(hash);
+                }
+            
+            });
+        })
+      
+        return hashedPassword
     }
 }

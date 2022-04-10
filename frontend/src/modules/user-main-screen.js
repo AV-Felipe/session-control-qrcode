@@ -11,15 +11,15 @@ const mainMenuElement = `
 const mainMenuComponents = [
     `
         <li class="user-main-menu-item">
-        <button type="button">Cadastrar Usuário</button>
+        <button id="add-user-menu" type="button">Cadastrar Usuário</button>
         </li>
         
         <li class="user-main-menu-item">
-        <button type="button">Listar Usuários</button>
+        <button id="list-users-button" type="button">Listar Usuários</button>
         </li>
         
         <li class="user-main-menu-item">
-        <button type="button">Cadastrar Evento</button>
+        <button id="add-event-menu" type="button">Cadastrar Evento</button>
         </li>
     `,
 
@@ -54,6 +54,8 @@ async function loadUserScreen(userType){
         menuTitle.innerText = 'Administrator';
         mainMenuBody.insertAdjacentHTML('beforeend', mainMenuComponents[0]);
 
+        currentScreen.addEventListener('click', userOptions);
+
     }else if(userType === 'user'){
 
         menuTitle.innerText = 'Usuário';
@@ -73,6 +75,27 @@ async function clearScreen(screenElement){
     }
 
     return;
+}
+
+async function userOptions(event){
+    const pressedButton = event.target.id;
+
+    console.log(pressedButton)
+
+    switch (pressedButton) {
+        case 'add-user-menu':
+
+            break;
+        
+        case 'list-users-button':
+
+            break;
+        
+        case 'add-event-menu':
+
+            break;
+    }
+
 }
 
 export {loadUserScreen}
