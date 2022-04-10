@@ -34,3 +34,24 @@ header {
 #error-display {
     color: rgb(229, 143, 128);
 }
+
+/* classes */
+
+.user-main-menu{
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 2px solid white;
+    border-radius: 8px;
+    padding: 5px;
+}
+
+.user-main-menu-item{
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    margin: 5px 0px;
+
+}

@@ -1,3 +1,5 @@
+import {loadUserScreen} from './user-main-screen.js';
+
 const buttonLogin = document.getElementById('login-button');
 
 buttonLogin.addEventListener('click', loginToServer);
@@ -30,6 +32,7 @@ async function loginToServer(event){
     })
     .then(data => {
         console.log(data);
+        loadUserScreen(data.user_type);
         //call screen change with cookie and data
     })
     .catch(err => {
