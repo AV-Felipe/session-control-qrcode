@@ -1,3 +1,4 @@
+import {createNewUser} from './admin-menu-server-communication.js';
 
 const mainMenuElement = `
     <ul id ="main-menu-body" class="user-main-menu">
@@ -37,7 +38,27 @@ const mainMenuComponents = [
     </li>
     `
 
-]
+];
+
+const subMenuComponents = [
+    `
+    <form id="create-new-user-menu" class="user-main-menu">
+            
+        <label for="new-full-name">Nome completo:</label>
+        <input type="text" id="new-full-name" />
+
+        <label for="new-user-name">Nome de usuário:</label>
+        <input type="text" id="new-user-name" />
+
+        <label for="new-user-password">Senha:</label>
+        <input type="password" id="new-user-password" />
+
+        <button type="button" id="create-user-button">Criar</button>
+
+    </form>
+    `
+
+];
 
 async function loadUserScreen(userType){
 
@@ -54,7 +75,7 @@ async function loadUserScreen(userType){
         menuTitle.innerText = 'Administrator';
         mainMenuBody.insertAdjacentHTML('beforeend', mainMenuComponents[0]);
 
-        currentScreen.addEventListener('click', userOptions);
+        currentScreen.addEventListener('click', adminOptions);
 
     }else if(userType === 'user'){
 
@@ -77,13 +98,20 @@ async function clearScreen(screenElement){
     return;
 }
 
-async function userOptions(event){
+async function adminOptions(event){
     const pressedButton = event.target.id;
 
     console.log(pressedButton)
 
+    const addUserMenuButton = document.getElementById('add-user-menu');
+
     switch (pressedButton) {
         case 'add-user-menu':
+            if(!document.contains(document.getElementById('create-new-user-menu'))){
+                addUserMenuButton.insertAdjacentHTML('afterend', subMenuComponents[0]);
+                document.getElementById('create-user-button').addEventListener('click', createNewUser);
+                document.addEventListener('click', closeMenu)
+            }
 
             break;
         
@@ -97,5 +125,23 @@ async function userOptions(event){
     }
 
 }
+
+function closeMenu(event){
+    console.log(event.path)
+    let clickInside = false;
+    event.path.forEach(element => {
+        if(element.id === 'create-new-user-menu'){
+            clickInside = true
+        }
+    });
+    if(clickInside || event.target.id === 'add-user-menu'){
+        return;
+    }else{
+        document.removeEventListener('click', closeMenu);
+        document.getElementById('create-user-button').removeEventListener('click', createNewUser);
+        document.getElementById('create-new-user-menu').remove();
+    }
+}
+
 
 export {loadUserScreen}
