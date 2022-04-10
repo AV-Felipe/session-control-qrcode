@@ -2,6 +2,8 @@ const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 
+const validateCookie = require('./middlewares/cookie-token-verification.js');
+
 // endpoints for routes
 const sessionControl = require('./routes/sessionControl.js');
 
@@ -21,6 +23,8 @@ app.use(cors(corsConfig));
 app.use(cookieParser());
 
 app.use(express.json());
+
+app.use(validateCookie);
 
 // main routes
 app.use('/session', sessionControl)

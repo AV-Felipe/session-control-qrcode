@@ -3,6 +3,7 @@ const router = express.Router();
 const db = require('../data-base/db-connection.js');
 const queryStrings = require('../data-base/db-queries.js'); 
 const bcrypt = require('../modules/data-encryption.js');
+const jwt = require('../modules/jwt-module.js');
 
 
 router.get('/', async (req, res)=>{
@@ -28,8 +29,12 @@ router.post('/login', async (req, res)=>{
             console.log(passwordMatch);
 
             if(passwordMatch){
+
+                const newToken = await jwt.generateToken({'username': data.user_name, 'userType': data.user_type})
+                //console.log(newToken);
+
                 res.status(200);
-                res.cookie('token name', 'token value');
+                res.cookie('access_token', newToken);
                 res.type('application/json');
                 res.send(`{"data": "${data.full_name}"}`);
                 return;
