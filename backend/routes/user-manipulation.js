@@ -7,13 +7,25 @@ const jwt = require('../modules/jwt-module.js');
 
 
 router.get('/', async (req, res)=>{
+
+    const userList = await db.query(queryStrings.listAllUsers);
+
     res.status(200);
     res.type('application/json');
-    res.send('{"endpoint": "ok"}');
+    res.json(userList);
 })
 
 router.post('/create', async (req, res)=>{
+
     console.log(req.body);
+
+    const receivedToken = await jwt.verifyToken(req.cookies.access_token);
+
+    if(receivedToken.userType != 'adm'){
+        res.status(403);
+        res.send();
+        return;
+    }
 
     const {full_name, user_name,password} = req.body;
 
