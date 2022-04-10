@@ -1,21 +1,22 @@
 const jwt = require('../modules/jwt-module.js');
 
-function cookieValidation(req, res, next){
+async function cookieValidation(req, res, next){
     
     const receivedToken = req.cookies.access_token;
 
     const requestedRoute = req.originalUrl;
 
+
+    // Only allow requests to login without token
     if(!receivedToken && requestedRoute != '/session/login'){
         return res.sendStatus(403);
-    }else if(!receivedToken && requestedRoute === '/session/login'){
+    }else if(requestedRoute === '/session/login'){
         return next();
     }
 
     try{
-        const tokenData = jwt.verifyToken(receivedToken);
+        const tokenData = await jwt.verifyToken(receivedToken);
         console.log(tokenData);
-        //validações sobre os dados do token: {'username': data.user_name, 'userType': data.user_type}
         return next();
     }catch(e){
         console.log(e)
