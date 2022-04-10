@@ -13,7 +13,7 @@ const app = express();
 //CORS parameters
 const corsConfig = {
     origin: ['http://192.168.0.100:3000'],
-    credentials: true,
+    credentials: true, //required for using credential (cookies)
 }
 
 app.use(cors(corsConfig));
