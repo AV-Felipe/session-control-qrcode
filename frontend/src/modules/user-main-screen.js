@@ -56,6 +56,23 @@ const subMenuComponents = [
         <button type="button" id="create-user-button">Criar</button>
 
     </form>
+    `,
+
+    `
+    <table id="user-list-table" class="table-users-list">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nome Completo</th>
+                <th>Nome de Usuário</th>
+            </tr>
+        </thead>
+
+        <tbody id="users-list-rendering-area">
+
+        </tbody>
+
+    </table>
     `
 
 ];
@@ -104,6 +121,7 @@ async function adminOptions(event){
     console.log(pressedButton)
 
     const addUserMenuButton = document.getElementById('add-user-menu');
+    const listUsersMenuButton = document.getElementById('list-users-button');
 
     switch (pressedButton) {
         case 'add-user-menu':
@@ -116,6 +134,49 @@ async function adminOptions(event){
             break;
         
         case 'list-users-button':
+            if(!document.contains(document.getElementById('user-list-table'))){
+                
+                listUsersMenuButton.insertAdjacentHTML('afterend', subMenuComponents[1]);
+
+                fetch('http://192.168.0.100:3003/user/',{
+                    method: 'GET',
+                    credentials:'include',//required for same origin credentials (for browser to store server cookie)
+                    headers:{
+                        'Content-Type': 'application/json',
+                    },
+                })
+                .then(response => {
+                    if(!response.ok){
+                        throw Error(response.status);
+                    }else{
+                        return response.json();
+                    }
+                    
+                })
+                .then(data => {
+                    console.log(data);
+                    data.forEach((element)=>{
+                        const output = document.getElementById('users-list-rendering-area')
+    
+                        output.insertAdjacentHTML('beforeend', `
+                            <tr>
+                                <td>${element.id}</td>
+                                <td>${element.full_name}</td>
+                                <td>${element.user_name}</td>
+                            </tr>
+                        `)
+                    })
+                    
+                })
+                .catch(err => {
+                    console.log(err);
+                    return;
+                })
+
+
+            }else{
+                document.getElementById('user-list-table').remove();
+            }
 
             break;
         
@@ -141,7 +202,9 @@ function closeMenu(event){
         document.getElementById('create-user-button').removeEventListener('click', createNewUser);
         document.getElementById('create-new-user-menu').remove();
     }
-}
+};
+
+
 
 
 export {loadUserScreen}

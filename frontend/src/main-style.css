@@ -55,3 +55,42 @@ header {
     margin: 5px 0px;
 
 }
+
+.table-users-list {
+    border: 2px solid whitesmoke;
+    border-collapse: separate;
+    border-radius: 8px;
+    margin: 20px;
+}
+
+.table-users-list th:first-child {
+    border-left: none;
+    border-radius: 6px 0 0 0;
+}
+
+.table-users-list th:last-child {
+    border-right: none;
+    border-radius: 0 6px 0 0;
+}
+
+.table-users-list tr:last-child td:first-child {
+    border-left: none;
+    border-radius: 0 0 0 6px;
+}
+
+.table-users-list tr:last-child td:last-child {
+    border-right: none;
+    border-radius: 0 0 6px 0;
+}
+
+.table-users-list th, .table-users-list td {
+    padding: 2px 4px;
+}
+
+.table-users-list th {
+    background-color: coral;
+}
+
+.table-users-list tbody tr:nth-child(even) {
+    background-color:cornflowerblue;
+}
