@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 
 const privateKey = 'top_secret';
 
-const expiration = {expiresIn: '30000'};
+const expiration = {expiresIn: '12h'};
 
 module.exports = {
     async generateToken(payLoad){

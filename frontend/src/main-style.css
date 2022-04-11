@@ -56,6 +56,14 @@ header {
 
 }
 
+.user-main-menu-item-center{
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 5px 0px;
+}
+
 .table-users-list {
     border: 2px solid whitesmoke;
     border-collapse: separate;

@@ -16,5 +16,26 @@ module.exports = {
     INSERT INTO events (title, description, event_date, event_time)
     VALUES ($1, $2, $3, $4)
     RETURNING id;
+    `,
+
+    insertNewEnroll: `
+    INSERT INTO users_events (user_id, event_id)
+    VALUES ($1, $2)
+    RETURNING id;
+    `,
+
+    getUserIdByUserName: `SELECT id FROM users where user_name = $1;`,
+
+    getUserEnrolledEvents: `
+    WITH matched_events AS (
+        SELECT users_events.id as event_id, title, event_date, event_time, user_id
+        FROM events
+        LEFT JOIN users_events on event_id = events.id
+    )
+    SELECT full_name, user_name, title, event_date, event_time, event_id
+        FROM matched_events
+    LEFT JOIN users on users.id = user_id
+    WHERE users.id = $1
+    ORDER BY event_date, event_time;
     `
 }
