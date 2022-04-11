@@ -173,6 +173,57 @@ router.get('/mynextevent', async (req, res)=>{
 
 
 
+});
+
+router.get('/confirm', async (req, res)=>{
+
+    console.log(req.query.id);
+
+    const receivedToken = await jwt.verifyToken(req.cookies.access_token);
+
+    if(receivedToken.userType != 'adm'){
+        res.status(403);
+        res.send();
+        return;
+    }
+    
+    const eventId = req.query.id;
+
+    if(eventId > 0){
+
+        try{
+            
+            const eventDown = await db.query(queryStrings.confirmPresenceOnEvent, [eventId]);
+            console.log(eventDown);
+
+            res.status(201);
+            res.type('application/json');
+            res.json(eventDown[0]);
+
+            return;
+        }catch(err){
+            console.log(err)
+
+            res.status(409);
+            res.type('application/json');
+            res.send(`{"error": "an event with this characteristics already exists"}`);
+            
+            return;
+        }
+
+
+
+
+    }else{
+        res.status(400);
+        res.send();
+        return;
+    }
+
+
+
+
+
 })
 
 
